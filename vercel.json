@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "functions": {
+    "api/gateway.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/refund-desk/:path*",
+      "destination": "/api/gateway?path=/api/refund-desk/:path*"
+    },
+    {
+      "source": "/api/health",
+      "destination": "/api/gateway?path=/api/health"
+    },
+    {
+      "source": "/api/diagnostics",
+      "destination": "/api/gateway?path=/api/diagnostics"
+    },
+    {
+      "source": "/api/experiments/learning",
+      "destination": "/api/gateway?path=/api/experiments/learning"
+    },
+    {
+      "source": "/api/benchmarks/dataflow",
+      "destination": "/api/gateway?path=/api/benchmarks/dataflow"
+    },
+    {
+      "source": "/api/demo/reset",
+      "destination": "/api/gateway?path=/api/demo/reset"
+    },
+    {
+      "source": "/api/evidence/mcp-registry",
+      "destination": "/api/gateway?path=/api/evidence/mcp-registry"
+    },
+    {
+      "source": "/api/evidence/datasets",
+      "destination": "/api/gateway?path=/api/evidence/datasets"
+    },
+    {
+      "source": "/api/evidence/infrastructure",
+      "destination": "/api/gateway?path=/api/evidence/infrastructure"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+        }
+      ]
+    }
+  ]
+}
