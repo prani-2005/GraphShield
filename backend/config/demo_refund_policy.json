@@ -1,0 +1,9 @@
+{
+  "version": "invented-demo-policy-v1",
+  "source": "INVENTED FOR HACKATHON; NOT AN OLIST POLICY AND NOT LEGAL REFUND ELIGIBILITY",
+  "thresholds": {"shipping_refund_days": 7, "full_refund_days": 14},
+  "demo_processing_business_days": "5-10",
+  "currency": "BRL",
+  "approval_required": true,
+  "refunds_are_real": false
+}

@@ -1,0 +1,1 @@
+Put genuine, licensed OpenAPI v3 YAML or JSON source files here before discovery. Review API source licensing and avoid proprietary secrets or endpoints. `graphshield.real_mcp discover` preserves file SHA256, title, API version, and operations. Input/output field matches become **unreviewed** candidates only. No OpenAPI endpoint is executed by the browser.

@@ -1,0 +1,38 @@
+# UNTESTED: written from HydraDB's README and your WSL build notes; not built in CI.
+# Builds the self-hosted open-source engine (github.com/hydra-db/hydradb). No official image is documented.
+# Expect a long first build (Rust, debug profile ~640 MB binary in your WSL run).
+FROM ubuntu:24.04 AS build
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential clang libclang-dev cmake pkg-config libcypher-parser-dev libgraphblas-dev \
+    curl git ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# --- GraphBLAS + LAGraph from source -------------------------------------------------
+# Your WSL build needed GraphBLAS 10.5.2 and LAGraph built from source (otherwise: "unable to find library -llagraph").
+# TODO: set these two refs to EXACTLY what you used in WSL (check `history | grep -i lagraph`). They are guesses.
+ARG GRAPHBLAS_REF=v10.5.2
+ARG LAGRAPH_REF=main
+RUN git clone --depth 1 --branch ${GRAPHBLAS_REF} https://github.com/DrTimothyAldenDavis/GraphBLAS.git /src/GraphBLAS \
+ && cmake -S /src/GraphBLAS -B /src/GraphBLAS/build -DCMAKE_BUILD_TYPE=Release \
+ && cmake --build /src/GraphBLAS/build -j"$(nproc)" && cmake --install /src/GraphBLAS/build && ldconfig
+RUN git clone --depth 1 --branch ${LAGRAPH_REF} https://github.com/GraphBLAS/LAGraph.git /src/LAGraph \
+ && cmake -S /src/LAGraph -B /src/LAGraph/build -DCMAKE_BUILD_TYPE=Release \
+ && cmake --build /src/LAGraph/build -j"$(nproc)" && cmake --install /src/LAGraph/build && ldconfig
+
+# --- HydraDB ---------------------------------------------------------------------------
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+ENV PATH=/root/.cargo/bin:$PATH LIBRARY_PATH=/usr/local/lib LD_LIBRARY_PATH=/usr/local/lib RUST_MIN_STACK=33554432
+RUN git clone --depth 1 https://github.com/hydra-db/hydradb.git /src/hydradb
+WORKDIR /src/hydradb
+RUN cargo build --release --locked --features server-runtime --bin graph-node
+
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates libgraphblas-dev libcypher-parser-dev \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=build /usr/local/lib /usr/local/lib
+COPY --from=build /src/hydradb/target/release/graph-node /usr/local/bin/graph-node
+RUN ldconfig
+COPY docker/hydradb-entrypoint.sh /usr/local/bin/hydradb-entrypoint.sh
+RUN chmod +x /usr/local/bin/hydradb-entrypoint.sh
+ENV RUST_MIN_STACK=33554432 LD_LIBRARY_PATH=/usr/local/lib
+ENTRYPOINT ["/usr/local/bin/hydradb-entrypoint.sh"]

@@ -1,0 +1,53 @@
+{
+  "source_git_commit": "e1dc4b18dbb948921da37f3d4224a628730b43b0",
+  "servers": [
+    {
+      "id": "filesystem_primary",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@1.0.0",
+        "/app/reports"
+      ],
+      "package": "@modelcontextprotocol/server-filesystem@1.0.0"
+    },
+    {
+      "id": "filesystem_standby",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@1.0.0",
+        "/app/reports"
+      ],
+      "package": "@modelcontextprotocol/server-filesystem@1.0.0"
+    },
+    {
+      "id": "memory",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory@1.0.0"
+      ],
+      "package": "@modelcontextprotocol/server-memory@1.0.0"
+    },
+    {
+      "id": "sequentialthinking",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking@1.0.0"
+      ],
+      "package": "@modelcontextprotocol/server-sequential-thinking@1.0.0"
+    },
+    {
+      "id": "financial_reporting",
+      "command": "python",
+      "args": [
+        "-m",
+        "graphshield.financial_mcp"
+      ],
+      "package": "GraphShield built-in financial-reporting MCP adapter (read-only)",
+      "source_repo": "local source graphshield/financial_mcp.py"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Only add sanitized **real** benchmark JSON from your actual self-hosted HydraDB runs. Never invent result files or include sensitive tool descriptions, private identifiers, service secrets, or proprietary financial data in public results.

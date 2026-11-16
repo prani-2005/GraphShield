@@ -1,0 +1,52 @@
+/* GraphShield motion + hero layer. Additive: nothing here changes behaviour. Respects reduced-motion. */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:radial-gradient(900px 500px at 78% -8%,rgba(64,209,190,.14),transparent 60%),
+ radial-gradient(700px 420px at -5% 105%,rgba(122,174,231,.12),transparent 60%),
+ linear-gradient(rgba(122,174,231,.045) 1px,transparent 1px) 0 0/44px 44px,
+ linear-gradient(90deg,rgba(122,174,231,.045) 1px,transparent 1px) 0 0/44px 44px;animation:gs-drift 40s linear infinite}
+@keyframes gs-drift{to{background-position:0 0,0 0,44px 44px,44px 44px}}
+.view.active>*{animation:gs-rise .55s cubic-bezier(.2,.7,.2,1) both}
+.view.active>*:nth-child(2){animation-delay:.05s}.view.active>*:nth-child(3){animation-delay:.1s}.view.active>*:nth-child(4){animation-delay:.15s}
+@keyframes gs-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.panel{transition:border-color .25s,box-shadow .25s,transform .25s}
+.panel:hover{border-color:#3b6b73;box-shadow:0 10px 34px rgba(64,209,190,.08);transform:translateY(-1px)}
+button{transition:transform .15s,border-color .2s,box-shadow .2s,background .2s}
+button:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(64,209,190,.18)}
+button:active:not(:disabled){transform:translateY(1px) scale(.985)}
+button.primary{background:linear-gradient(135deg,#40d1be,#5fe3d0);box-shadow:0 0 0 0 rgba(64,209,190,.5);animation:gs-pulse 2.8s ease-out infinite}
+@keyframes gs-pulse{70%{box-shadow:0 0 0 12px rgba(64,209,190,0)}100%{box-shadow:0 0 0 0 rgba(64,209,190,0)}}
+/* hero: problem -> answer -> live proof */
+.hero{display:grid;grid-template-columns:1.1fr 1.1fr 1.2fr;gap:14px;margin:22px 0 4px}
+.hero .card{position:relative;overflow:hidden;background:linear-gradient(160deg,#122238,#0e1a2b);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+.hero .card::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.06) 50%,transparent 65%);transform:translateX(-120%);animation:gs-sheen 6s ease-in-out infinite}
+@keyframes gs-sheen{55%,100%{transform:translateX(120%)}}
+.hero .tag{font-size:10px;letter-spacing:2px;font-weight:800;margin-bottom:8px}
+.hero .problem .tag{color:var(--red)}.hero .answer .tag{color:var(--mint)}.hero .proof .tag{color:var(--amber)}
+.hero p{margin:0;color:#c6d8e8;font-size:13px;line-height:1.55}.hero p b{color:var(--text)}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.proof-grid .n{font-size:28px;font-weight:850;letter-spacing:-.8px;color:var(--mint);font-variant-numeric:tabular-nums}
+.proof-grid .l{font-size:11px;color:var(--muted);line-height:1.3}
+.proof-grid .warn{color:var(--amber)}
+.hero .fine{font-size:10.5px;color:#7f98ad;margin-top:10px}
+/* graph path + trace: staggered reveal, flowing connectors */
+.desk-node,.desk-flow{animation:gs-pop .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*90ms)}
+@keyframes gs-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+.desk-node{box-shadow:0 0 0 1px rgba(64,209,190,.0),0 0 18px rgba(64,209,190,.07)}
+.desk-node.task{animation-name:gs-pop,gs-glow;animation-duration:.45s,2.6s;animation-iteration-count:1,infinite}
+@keyframes gs-glow{50%{box-shadow:0 0 0 1px rgba(64,209,190,.35),0 0 24px rgba(64,209,190,.22)}}
+.desk-flow{position:relative;color:#6fd9cb;letter-spacing:1.4px}
+.desk-flow::after{content:"";display:block;margin:4px auto 0;width:2px;height:14px;background:repeating-linear-gradient(var(--mint) 0 4px,transparent 4px 8px);background-size:2px 8px;animation:gs-flow .6s linear infinite}
+@keyframes gs-flow{to{background-position:0 8px}}
+.desk-event{animation:gs-slide .35s ease-out both}
+@keyframes gs-slide{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+.desk-event.bad{animation:gs-slide .35s ease-out both,gs-shake .5s .1s,gs-red 1.6s .1s 2}
+@keyframes gs-shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes gs-red{50%{box-shadow:0 0 0 2px rgba(255,155,158,.45),0 0 22px rgba(255,155,158,.25)}}
+.desk-event.reroute{border-color:var(--mint);animation:gs-slide .35s ease-out both,gs-mint 1.4s .1s 2}
+@keyframes gs-mint{50%{box-shadow:0 0 0 2px rgba(64,209,190,.5),0 0 24px rgba(64,209,190,.3);background:#0f2f33}}
+.status{transition:background .3s,border-color .3s}
+.context-track div,.progress>div{background:linear-gradient(90deg,#2aa99a,#6fe8d6,#2aa99a);background-size:200% 100%;animation:gs-bar 2.4s linear infinite}
+@keyframes gs-bar{to{background-position:-200% 0}}
+.empty{position:relative;overflow:hidden}.empty::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(122,174,231,.07) 50%,transparent 70%);transform:translateX(-100%);animation:gs-sheen 3.2s infinite}
+@media(max-width:1100px){.hero{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

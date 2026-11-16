@@ -1,0 +1,11 @@
+.venv
+__pycache__
+.pytest_cache
+.git
+.env
+*.pyc
+results/
+data/mcp_registry.json
+data/real_workflows.json
+data/evaluation_tasks.json
+openapi_sources/

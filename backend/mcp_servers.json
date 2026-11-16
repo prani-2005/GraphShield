@@ -1,0 +1,159 @@
+{
+  "source_git_commit": "e1dc4b18dbb948921da37f3d4224a628730b43b0",
+  "servers": [
+    {
+      "id": "orders_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "orders",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "orders_replica",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "orders",
+        "GRAPHSHIELD_DESK_PROVIDER": "replica"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "orders_cache",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "orders",
+        "GRAPHSHIELD_DESK_PROVIDER": "cache"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "customers_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "customers",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "payments_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "payments",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "payments_replica",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "payments",
+        "GRAPHSHIELD_DESK_PROVIDER": "replica"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "payments_cache",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "payments",
+        "GRAPHSHIELD_DESK_PROVIDER": "cache"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "logistics_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "logistics",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "policy_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "policy",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "actions_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "actions",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    },
+    {
+      "id": "catalog_primary",
+      "command": "{python}",
+      "args": [
+        "-m",
+        "graphshield.refund_desk_mcp"
+      ],
+      "env": {
+        "GRAPHSHIELD_DESK_ROLE": "catalog",
+        "GRAPHSHIELD_DESK_PROVIDER": "primary"
+      },
+      "package": "GraphShield Refund Desk custom MCP; Olist-backed or disclosed simulation",
+      "source_repo": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    }
+  ]
+}

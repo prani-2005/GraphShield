@@ -1,0 +1,32 @@
+# UNTESTED compose file. HydraDB stays on the private network; only the API is published.
+services:
+  hydradb:
+    build: { context: ., dockerfile: Dockerfile.hydradb }
+    environment:
+      HYDRADB_TOKEN: ${HYDRADB_TOKEN:?set a 32+ character secret in .env}
+    volumes: [ "hydradb_data:/data" ]
+    expose: [ "7687" ]                     # Bolt, internal only. Do NOT add a ports: entry.
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fs http://127.0.0.1:9090/readyz || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  api:
+    build: { context: ., dockerfile: Dockerfile.api }
+    depends_on: { hydradb: { condition: service_healthy } }
+    environment:
+      GRAPH_BACKEND: hydradb
+      HYDRADB_BOLT: bolt://hydradb:7687
+      HYDRADB_GRAPH: default
+      HYDRADB_TOKEN: ${HYDRADB_TOKEN}
+      GRAPHSHIELD_ADMIN_TOKEN: ${GRAPHSHIELD_ADMIN_TOKEN:?set an admin token for public deployments}
+      GRAPHSHIELD_RATE_LIMIT_PER_MIN: ${GRAPHSHIELD_RATE_LIMIT_PER_MIN:-60}
+      GRAPHSHIELD_CORS_ORIGINS: ${GRAPHSHIELD_CORS_ORIGINS:-http://localhost:8800}
+    volumes:
+      - ./data:/app/data                   # Olist CSVs in data/olist, plus generated cases and sandbox outbox
+      - ./results:/app/results
+    ports: [ "8800:8800" ]
+    restart: unless-stopped
+volumes:
+  hydradb_data:
